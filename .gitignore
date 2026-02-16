@@ -1,7 +1,13 @@
 node_modules/
 .env
+.env.local
+.env.*.local
+.env.production
 *.db
 backend/data/
 frontend/dist/
 .DS_Store
+Thumbs.db
 *.log
+*.tmp
+.cache/
