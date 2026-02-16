@@ -18,6 +18,9 @@ export const config = {
   get dbPath() {
     return getDbPath();
   },
-  /** Allowed CORS origin (frontend URL). Empty = allow same-origin only. */
-  frontendOrigin: process.env.FRONTEND_ORIGIN || '',
+  /** Allowed CORS origin (frontend URL). Strip trailing slash to match browser Origin. */
+  get frontendOrigin() {
+    const o = process.env.FRONTEND_ORIGIN || '';
+    return o.replace(/\/$/, '');
+  },
 };

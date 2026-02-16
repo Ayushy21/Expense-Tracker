@@ -11,7 +11,13 @@ const app = express();
 
 // CORS: allow frontend origin in production; in dev allow any for localhost
 const corsOptions = config.frontendOrigin
-  ? { origin: config.frontendOrigin }
+  ? {
+      origin: (origin, cb) => {
+        const allowed = config.frontendOrigin.replace(/\/$/, '');
+        const ok = !origin || origin === allowed || origin === allowed + '/';
+        cb(null, ok);
+      },
+    }
   : { origin: true };
 app.use(cors(corsOptions));
 
