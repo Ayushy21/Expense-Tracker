@@ -58,7 +58,7 @@ export default function ExpenseList({ expenses, total, loading, error }) {
               <td>
                 <span className="category-badge">{e.category}</span>
               </td>
-              <td>{e.description}</td>
+              <td className="description">{e.description}</td>
               <td className="amount">{formatAmount(e.amount)}</td>
             </tr>
           ))}

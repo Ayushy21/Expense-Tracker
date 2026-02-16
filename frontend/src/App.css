@@ -39,6 +39,24 @@
   color: var(--text-muted);
 }
 
+/* Success toast after adding expense */
+.success-toast {
+  padding: 0.65rem 1rem;
+  background: var(--success-bg);
+  color: var(--success);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border: 1px solid var(--success);
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Card base */
 .card {
   background: var(--surface);
@@ -48,13 +66,14 @@
   overflow: hidden;
 }
 
-/* Form */
+/* Form – distinct “action” card */
 .expense-form {
   background: var(--surface);
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 1.35rem;
+  border-left: 4px solid var(--primary);
 }
 
 .expense-form h2 {
@@ -155,17 +174,18 @@
   background: var(--surface-hover);
 }
 
-/* Filters */
+/* Filters – visually tied to list below */
 .filters-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.1rem;
   background: var(--surface);
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
+  margin-bottom: 0.5rem;
 }
 
 .filters-bar label {
@@ -209,7 +229,7 @@
   color: var(--primary-hover);
 }
 
-/* List */
+/* List – easy to scan, clear rows */
 .expense-list {
   background: var(--surface);
   border: 1px solid var(--border-light);
@@ -219,10 +239,10 @@
 }
 
 .expense-list .list-header {
-  padding: 0.85rem 1rem;
+  padding: 0.9rem 1.1rem;
   background: var(--bg-subtle);
   border-bottom: 1px solid var(--border-light);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -236,12 +256,13 @@
 
 .expense-list th,
 .expense-list td {
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.1rem;
   text-align: left;
   border-bottom: 1px solid var(--border-light);
+  font-size: 0.95rem;
 }
 
-.expense-list th {
+.expense-list thead th {
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-muted);
@@ -250,44 +271,60 @@
   background: var(--surface-hover);
 }
 
-.expense-list tbody tr:hover {
+.expense-list tbody tr {
+  transition: background 0.12s ease;
+}
+
+.expense-list tbody tr:nth-child(even) {
   background: var(--surface-hover);
+}
+
+.expense-list tbody tr:hover {
+  background: var(--primary-light);
 }
 
 .expense-list tbody tr:last-child td {
   border-bottom: none;
 }
 
+.expense-list td.description {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 .expense-list td.amount,
 .expense-list th.amount {
   text-align: right;
   font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--primary-hover);
 }
 
 .expense-list .category-badge {
   display: inline-block;
-  padding: 0.2rem 0.5rem;
+  padding: 0.25rem 0.6rem;
   border-radius: 6px;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   background: var(--primary-light);
   color: var(--primary-hover);
 }
 
 .list-total {
-  padding: 0.9rem 1rem;
-  background: var(--bg-subtle);
-  font-size: 1rem;
-  font-weight: 600;
-  border-top: 2px solid var(--border);
+  padding: 1rem 1.1rem;
+  background: var(--primary-light);
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-top: 2px solid var(--primary);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: var(--primary-hover);
 }
 
 .list-total .total-label {
-  color: var(--text-muted);
-  font-weight: 500;
+  color: var(--primary-hover);
+  font-weight: 600;
 }
 
 .list-loading {
@@ -346,17 +383,18 @@
   border-left: 4px solid var(--error);
 }
 
-/* Summary */
+/* Summary – clear category breakdown */
 .summary {
   background: var(--surface);
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
-  padding: 1.15rem;
+  padding: 1.2rem;
   box-shadow: var(--shadow);
+  margin-top: 1rem;
 }
 
 .summary h3 {
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.9rem;
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text);
@@ -372,12 +410,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.45rem 0;
+  padding: 0.55rem 0;
   border-bottom: 1px solid var(--border-light);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
-.summary li:last-child {
+.summary li:last-of-type {
   border-bottom: none;
 }
 
@@ -393,13 +431,20 @@
 }
 
 .summary-total {
-  margin: 0.75rem 0 0;
-  padding-top: 0.75rem;
+  margin: 0.85rem 0 0;
+  padding: 0.75rem 0 0;
   border-top: 2px solid var(--border);
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--success-bg);
+  margin-left: -1.2rem;
+  margin-right: -1.2rem;
+  margin-bottom: -1.2rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .summary-total strong {

@@ -23,6 +23,7 @@ export default function App() {
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [summaryError, setSummaryError] = useState(null);
   const [formResetTrigger, setFormResetTrigger] = useState(0);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const fetchExpenses = useCallback(async () => {
     setListError(null);
@@ -83,6 +84,8 @@ export default function App() {
       setFormResetTrigger((t) => t + 1);
       await Promise.all([fetchExpenses(), fetchSummary()]);
       setSubmitError(null);
+      setSuccessMessage('Expense added');
+      setTimeout(() => setSuccessMessage(null), 3000);
     } catch (e) {
       setSubmitError(e.body?.message || e.message || 'Failed to add expense');
     } finally {
@@ -97,6 +100,11 @@ export default function App() {
         <p>Track spending by category and see where your money goes.</p>
       </header>
       <aside className="app-sidebar">
+        {successMessage && (
+          <div className="success-toast" role="status">
+            {successMessage}
+          </div>
+        )}
         <ExpenseForm
           onSubmit={handleSubmit}
           loading={submitLoading}
